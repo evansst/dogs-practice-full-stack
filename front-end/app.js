@@ -1,19 +1,21 @@
-const my_dogs = [{
-  name: 'Rokky!'
-},{
-  name: 'Bandit!'
-},{
-  name: 'Jake!'
-}];
+const $ul = document.querySelector('ul.dogs');
 
-const $my_dogs = my_dogs.map(dog => {
+fetch('http://localhost:3000/dogs')
+  .then(response => response.json())
+  .then(response => addDogsToPage(response.dogs));
+
+function addDogsToPage(dogs) {
+  dogs
+    .map(dogToElement)
+    .forEach(addToDogs);
+}
+
+function dogToElement(dog) {
   const $li = document.createElement('li');
   $li.textContent = dog.name;
   return $li;
-});
+}
 
-const $ul = document.querySelector('ul.dogs');
-
-$my_dogs.forEach($dog => {
+function addToDogs($dog) {
   return $ul.append($dog);
-});
+}
